@@ -1,5 +1,5 @@
 [project]
-name = "hello_package_ewan"
+name = "helloworld"
 version = "0.0.6"
 authors = [
   { name="Ewan Byrne", email="21emb10@queensu.ca" },
@@ -13,3 +13,7 @@ classifiers = [
 ]
 license = "MIT"
 license-files = ["LICEN[CS]E*"]
+
+[tool.pytest.ini_options]
+addopts = "--verbosity=2"
+pythonpath = ["src"]
