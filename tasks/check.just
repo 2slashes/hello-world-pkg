@@ -24,5 +24,5 @@ check-type:
 
 # check tests
 [group('check')]
-check-test:
+check-tests:
     uv run pytest --cov-report "xml:coverage.xml" --cov=src tests/
