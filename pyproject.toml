@@ -17,3 +17,13 @@ license-files = ["LICEN[CS]E*"]
 [tool.pytest.ini_options]
 addopts = "--verbosity=2"
 pythonpath = ["src"]
+
+# DEPENDENCIES
+
+[dependency-groups]
+check = [
+    "coverage>=7.6.12",
+    "pytest>=8.3.5",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.9.9",
+]
