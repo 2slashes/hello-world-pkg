@@ -16,7 +16,6 @@ jobs:
       - uses: extractions/setup-just@v3
       - run: uv sync --group=check
       - run: uv run just check-code
-      - run: uv run just check-type
+      - run: uv run just check-test
       - run: uv run just check-format
-      - run: uv run just check-security
       - run: uv run just check-coverage
