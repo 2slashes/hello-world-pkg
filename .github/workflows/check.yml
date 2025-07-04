@@ -10,9 +10,6 @@ concurrency:
 jobs:
   checks:
     runs-on: ubuntu-latest
-    env:
-      SOURCES: src/
-      TESTS: tests/
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
