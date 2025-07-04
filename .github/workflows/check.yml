@@ -14,7 +14,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
       - uses: extractions/setup-just@v3
+      - run: uv add --dev ty
       - run: uv sync --group=check
       - run: uv run just check-code
       - run: uv run just check-format
       - run: uv run just check-coverage
+      - run: uv run just check-type

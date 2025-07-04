@@ -1,6 +1,6 @@
 # run check tasks
 [group('check')]
-check: check-code check-coverage check-format check-test
+check: check-code check-coverage check-format check-type
 
 # check code quality
 [group('check')]
@@ -21,3 +21,8 @@ check-format:
 [group('check')]
 check-test numprocesses="auto":
     uv run pytest --numprocesses={{numprocesses}} {{TESTS}}
+
+# check type
+[group('check')]
+check-type:
+    uv run ty check
