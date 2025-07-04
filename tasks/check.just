@@ -10,7 +10,7 @@ check-code:
 # check code coverage
 [group('check')]
 check-coverage numprocesses="auto" cov_fail_under="80":
-    uv run pytest --numprocesses={{numprocesses}} --cov={{SOURCES}} --cov-fail-under={{cov_fail_under}} {{TESTS}}
+    uv run pytest --cov={{SOURCES}} --cov-fail-under={{cov_fail_under}} {{TESTS}}
 
 # check code format
 [group('check')]
