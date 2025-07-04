@@ -17,11 +17,6 @@ check-coverage numprocesses="auto" cov_fail_under="80":
 check-format:
     uv run ruff format --check {{SOURCES}} {{TESTS}}
 
-# check unit tests
-[group('check')]
-check-test numprocesses="auto":
-    uv run pytest --numprocesses={{numprocesses}} {{TESTS}}
-
 # check type
 [group('check')]
 check-type:
