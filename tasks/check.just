@@ -1,6 +1,6 @@
 # run check tasks
 [group('check')]
-check: check-code check-coverage check-format check-type
+check: check-code check-coverage check-format check-type check-tests
 
 # check code quality
 [group('check')]
@@ -26,3 +26,8 @@ check-test numprocesses="auto":
 [group('check')]
 check-type:
     uv run ty check
+
+# check tests
+[group('check')]
+check-test:
+    uv run pytest --cov-report "xml:coverage.xml" --cov=src tests/

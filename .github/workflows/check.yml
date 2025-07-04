@@ -20,3 +20,9 @@ jobs:
       - run: uv run just check-format
       - run: uv run just check-coverage
       - run: uv run just check-type
+      - run: uv run just check-tests
+      
+      - name: Pytest coverage comment
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+            pytest-xml-coverage-path: ./coverage.xml
