@@ -8,19 +8,35 @@ concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.ref }}
 jobs:
-  checks:
+  setup:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
+      - uses: ./ .github/actions/setup
       - uses: extractions/setup-just@v3
-      - run: uv add --dev ty
       - run: uv sync --group=check
+  check-code:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
       - run: uv run just check-code
+  check-format:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
       - run: uv run just check-format
-      - run: uv run just check-coverage
+  check-type:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - run: uv add --dev ty
       - run: uv run just check-type
-      
+  check-coverage:
+    needs: setup, check-code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check coverage
+      - run: uv run just check-coverage
       - name: Pytest coverage comment
         uses: MishaKav/pytest-coverage-comment@main
         with:
