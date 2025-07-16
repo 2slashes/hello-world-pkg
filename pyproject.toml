@@ -19,10 +19,12 @@ addopts = "--verbosity=2"
 
 # DEPENDENCIES
 
-[dependency-groups]
+[project.optional-dependencies]
 check = [
     "coverage>=7.6.12",
     "pytest>=8.3.5",
     "pytest-cov>=6.0.0",
     "ruff>=0.9.9",
 ]
+dev = ["rust-just>=1.39.0"]
+doc = ["pdoc>=15.0.1"]
