@@ -20,7 +20,7 @@ pythonpath = ["src"]
 
 # DEPENDENCIES
 
-[dependency-groups]
+[project.optional-dependencies]
 check = [
     "coverage>=7.6.12",
     "pytest>=8.3.5",

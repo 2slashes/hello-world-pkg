@@ -17,26 +17,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-      - run: uv sync --group=check
+      - run: pip install .[check]
 
-      - run: uv run just check-code
+      - run: just check-code
   check-format:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-      - run: uv sync --group=check
+      - run: pip install .[check]
 
-      - run: uv run just check-format
+      - run: just check-format
   check-type:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
 
-      - run: uv add --dev ty
+      - run: pip install ty
       - run: "echo 'WARNING: ty is being used for type checking. Ty is not production ready.'"
-      - run: uv run just check-type
+      - run: just check-type
   check-coverage:
     runs-on: ubuntu-latest
     steps:
@@ -44,10 +44,10 @@ jobs:
       - uses: ./.github/actions/setup
       
       - name: Install pytest
-        run: uv add --dev pytest pytest-cov
+        run: pip install pytest pytest-cov
 
       - name: Check coverage
-        run: uv run just check-coverage
+        run: just check-coverage
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
