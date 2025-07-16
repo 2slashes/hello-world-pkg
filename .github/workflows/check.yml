@@ -58,6 +58,7 @@ jobs:
   coverage-comment:
     permissions:
       pull-requests: write
+      issues: write
     needs:
       - check-coverage
       - check-code
