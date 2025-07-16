@@ -56,7 +56,9 @@ jobs:
           path: coverage.xml
   
   coverage-comment:
-    needs: 
+    permissions:
+      pull-requests: write
+    needs:
       - check-coverage
       - check-code
       - check-format
