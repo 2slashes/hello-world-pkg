@@ -8,35 +8,54 @@ concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.ref }}
 jobs:
-  setup:
+   
+  check-code:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./ .github/actions/setup
-      - uses: extractions/setup-just@v3
+      - uses: ./.github/actions/setup
       - run: uv sync --group=check
-  check-code:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
+
       - run: uv run just check-code
   check-format:
-    needs: setup
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: uv sync --group=check
+
       - run: uv run just check-format
   check-type:
-    needs: setup
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+
       - run: uv add --dev ty
+      - run: "echo 'WARNING: ty is being used for type checking. Ty is not production ready.'"
       - run: uv run just check-type
   check-coverage:
-    needs: setup, check-code
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      
+      - name: Install pytest
+        run: uv add --dev pytest pytest-cov
+
       - name: Check coverage
-      - run: uv run just check-coverage
+        run: uv run just check-coverage
+  
+  coverage-comment:
+    needs: 
+      - check-coverage
+      - check-code
+      - check-format
+      - check-type
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
       - name: Pytest coverage comment
         uses: MishaKav/pytest-coverage-comment@main
         with:
