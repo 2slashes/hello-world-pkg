@@ -4,23 +4,74 @@ on:
     branches:
       - '*'
   workflow_dispatch:
+  push:
+    branches:
+      - '*'
 concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.ref }}
 jobs:
-  checks:
+   
+  check-code:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-      - uses: extractions/setup-just@v3
-      - run: uv add --dev ty
       - run: uv sync --group=check
+
       - run: uv run just check-code
+  check-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: uv sync --group=check
+
       - run: uv run just check-format
-      - run: uv run just check-coverage
+  check-type:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+
+      - run: uv add --dev ty
+      - run: "echo 'WARNING: ty is being used for type checking. Ty is not production ready.'"
       - run: uv run just check-type
+  check-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
       
+      - name: Install pytest
+        run: uv add --dev pytest pytest-cov
+
+      - name: Check coverage
+        run: uv run just check-coverage
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage.xml
+  
+  coverage-comment:
+    permissions:
+      pull-requests: write
+    needs:
+      - check-coverage
+      - check-code
+      - check-format
+      - check-type
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download coverage report
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-report
+
       - name: Pytest coverage comment
         uses: MishaKav/pytest-coverage-comment@main
         with:
