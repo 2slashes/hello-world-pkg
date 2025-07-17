@@ -57,6 +57,7 @@ jobs:
   
   coverage-comment:
     permissions:
+      contents: write
       pull-requests: write
       issues: write
     needs:
