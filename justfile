@@ -1,9 +1,5 @@
 # https://just.systems/man/en/
 
-# REQUIRES
-
-uv := require("uv")
-
 # SETTINGS
 
 set dotenv-load := true
