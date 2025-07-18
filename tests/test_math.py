@@ -1,4 +1,4 @@
-from hello_package_ewan.math.operations import add_int
+from helloworld.math.operations import add_int
 
 
 def test_add_int():
