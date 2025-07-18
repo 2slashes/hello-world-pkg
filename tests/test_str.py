@@ -1,4 +1,4 @@
-from hello_package_ewan.str.operations import add_str
+from helloworld.str.operations import add_str
 
 
 def test_add_str():
