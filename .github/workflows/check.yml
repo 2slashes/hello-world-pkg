@@ -45,6 +45,9 @@ jobs:
       
       - name: Install pytest
         run: pip install pytest pytest-cov
+      
+      - name: Install package
+        run: pip install .
 
       - name: Check coverage
         run: just check-coverage
