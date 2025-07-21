@@ -62,6 +62,7 @@ jobs:
     permissions:
       pull-requests: write
       issues: write
+      contents: write
     needs:
       - check-coverage
       - check-code
