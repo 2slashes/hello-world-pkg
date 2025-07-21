@@ -16,7 +16,6 @@ license-files = ["LICEN[CS]E*"]
 
 [tool.pytest.ini_options]
 addopts = "--verbosity=2"
-pythonpath = ["src"]
 
 # DEPENDENCIES
 
